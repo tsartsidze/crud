@@ -1,0 +1,75 @@
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 10;
+  background-color: rgba(0, 0, 0, 0.75);
+}
+
+.modal {
+  position: fixed;
+  top: 35%;
+  left: 50%;
+  width: 30%;
+  transform: translate(-50%, -50%);
+  z-index: 100;
+  overflow: hidden;
+  transition: 0.3 ease;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  background-color: white;
+  border-radius: 12px;
+  background-color: #cfd8dc;
+}
+
+form div {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+
+form div input {
+  margin-top: 8px;
+  padding: 10px 2px;
+  width: 250px;
+  font-size: 16px;
+  border: 1px solid gray;
+  border-radius: 5px;
+}
+
+form div label {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.btnBackColor {
+  background-color: #25694b;
+  font-weight: bold;
+  font-size: 16px;
+  border: 1px solid #39a275;
+}
+
+.btnBackColor:hover {
+  background-color: #27ae60;
+}
+
+.editBtn {
+  background-color: #f99c05;
+  font-weight: bold;
+  font-size: 16px;
+  padding: 12px 30px;
+  border: 1px solid #f99c05;
+}
+
+.editBtn:hover {
+  background-color: #faaf37;
+  border: 1px solid #faaf37;
+}

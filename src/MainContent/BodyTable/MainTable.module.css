@@ -1,0 +1,28 @@
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+  box-shadow: 3px 5px 20px grey;
+}
+
+td,
+th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+.icons {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.tr td {
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
