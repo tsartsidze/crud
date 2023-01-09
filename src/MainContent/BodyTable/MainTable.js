@@ -10,8 +10,8 @@ const MainTable = (props) => {
     id: 0,
     name: "",
     email: "",
-    date: new Date(),
     number: "",
+    date: new Date(),
   });
 
   const deleteUserHandler = (userId) => {
