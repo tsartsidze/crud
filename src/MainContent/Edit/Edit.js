@@ -1,4 +1,3 @@
-import { Fragment } from "react";
 import Button from "../../UI/Button";
 import classes from "./Edit.module.css";
 
@@ -26,7 +25,7 @@ const Edit = (props) => {
   };
 
   return (
-    <Fragment>
+    <>
       <div className={classes.backdrop} onClick={closeEditModal}></div>
       <form className={classes.modal} onSubmit={editHandler}>
         <div>
@@ -73,7 +72,7 @@ const Edit = (props) => {
           edit
         </Button>
       </form>
-    </Fragment>
+    </>
   );
 };
 
