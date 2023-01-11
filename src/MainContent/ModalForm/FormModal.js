@@ -17,54 +17,30 @@ const Backdrop = (props) => {
 };
 
 const Overlay = (props) => {
-  const [nameValue, setNameValue] = useState("");
-  const [emailValue, setEmailValue] = useState("");
-  const [dateValue, setDateValue] = useState("");
-  const [numberValue, setNumberValue] = useState("");
+  const [userInfo, setUserInfo] = useState({
+    name: "",
+    email: "",
+    date: null,
+    number: "",
+  });
 
-  const nameHandler = (event) => {
-    setNameValue(event.target.value);
-  };
-
-  const emailHandler = (event) => {
-    setEmailValue(event.target.value);
-  };
-
-  const dateHandler = (event) => {
-    setDateValue(event.target.value);
-  };
-
-  const numberHandler = (event) => {
-    setNumberValue(event.target.value);
+  const onChangeFunction = (key, value) => {
+    setUserInfo({ ...userInfo, [key]: value });
   };
 
   const addUserHandler = (event) => {
     event.preventDefault();
 
     if (
-      nameValue === "" ||
-      emailValue === "" ||
-      dateValue === "" ||
-      numberValue === ""
+      userInfo.name === "" ||
+      userInfo.email === "" ||
+      userInfo.date === "" ||
+      userInfo.number === ""
     ) {
       return;
     } else {
-      const newDate = {
-        id: Math.random().toString(),
-        name: nameValue,
-        email: emailValue,
-        date: dateValue,
-        number: numberValue,
-      };
-
-      props.newDataList(newDate);
-
+      props.newDataList({ ...userInfo, id: Math.random().toString() });
       props.deleteFormModal(false);
-
-      setNameValue("");
-      setEmailValue("");
-      setDateValue("");
-      setNumberValue("");
     }
   };
 
@@ -72,7 +48,12 @@ const Overlay = (props) => {
     <form className={classes.modal}>
       <div>
         <label htmlFor="name">Name</label>
-        <input type="text" id="name" value={nameValue} onChange={nameHandler} />
+        <input
+          type="text"
+          id="name"
+          value={userInfo.name}
+          onChange={(event) => onChangeFunction("name", event.target.value)}
+        />
       </div>
 
       <div>
@@ -80,14 +61,19 @@ const Overlay = (props) => {
         <input
           type="email"
           id="email"
-          value={emailValue}
-          onChange={emailHandler}
+          value={userInfo.email}
+          onChange={(event) => onChangeFunction("email", event.target.value)}
         />
       </div>
 
       <div>
         <label htmlFor="date">Date</label>
-        <input type="date" id="date" value={dateValue} onChange={dateHandler} />
+        <input
+          type="date"
+          id="date"
+          value={userInfo.date}
+          onChange={(event) => onChangeFunction("date", event.target.value)}
+        />
       </div>
 
       <div>
@@ -95,8 +81,8 @@ const Overlay = (props) => {
         <input
           type="number"
           id="number"
-          value={numberValue}
-          onChange={numberHandler}
+          value={userInfo.number}
+          onChange={(event) => onChangeFunction("number", event.target.value)}
         />
       </div>
 
