@@ -3,7 +3,7 @@ import classes from "./MainTable.module.css";
 import { FaTrash, FaEdit } from "react-icons/fa";
 import Edit from "../Edit/Edit";
 
-const MainTable = (props) => {
+const MainTable = ({ deleteUser, listEdit, list }) => {
   const [editModal, setEditModal] = useState(false);
 
   const [info, setInfo] = useState({
@@ -15,7 +15,7 @@ const MainTable = (props) => {
   });
 
   const deleteUserHandler = (userId) => {
-    props.deleteUser(userId);
+    deleteUser(userId);
   };
 
   const editUserHandler = (userInfo) => {
@@ -33,7 +33,7 @@ const MainTable = (props) => {
 
   const editListHandler = (editedRow) => {
     setInfo(editedRow);
-    props.listEdit(editedRow);
+    listEdit(editedRow);
   };
 
   return (
@@ -56,7 +56,7 @@ const MainTable = (props) => {
             <th>Number</th>
             <th>Action</th>
           </tr>
-          {props.list.map((listRow) => (
+          {list.map((listRow) => (
             <tr key={listRow.id} className={classes.tr}>
               <td>{listRow.name}</td>
               <td>{listRow.email}</td>

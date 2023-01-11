@@ -3,7 +3,7 @@ import Button from "../../UI/Button";
 import FormModal from "../ModalForm/FormModal";
 import classes from "./TableHead.module.css";
 
-const TableHeader = (props) => {
+const TableHeader = ({ newDataList }) => {
   const [isVisible, setIsVisible] = useState(false);
 
   const visibleModalHandler = () => {
@@ -15,7 +15,7 @@ const TableHeader = (props) => {
   };
 
   const newDataListHandler = (newData) => {
-    props.newDataList(newData);
+    newDataList(newData);
   };
 
   const closeModalHander = (close) => {

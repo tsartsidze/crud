@@ -1,27 +1,27 @@
 import Button from "../../UI/Button";
 import classes from "./Edit.module.css";
 
-const Edit = (props) => {
+const Edit = ({ setInfo, info, onClose, edit }) => {
   const changeInfo = (key, value) => {
-    props.setInfo({ ...props.info, [key]: value });
+    setInfo({ ...info, [key]: value });
   };
 
   const closeEditModal = () => {
-    props.onClose(false);
+    onClose(false);
   };
 
   const editHandler = (event) => {
     event.preventDefault();
 
-    props.edit({
-      id: props.info.id,
-      name: props.info.name,
-      email: props.info.email,
-      date: props.info.date,
-      number: props.info.number,
+    edit({
+      id: info.id,
+      name: info.name,
+      email: info.email,
+      date: info.date,
+      number: info.number,
     });
 
-    props.onClose(false);
+    onClose(false);
   };
 
   return (
@@ -33,7 +33,7 @@ const Edit = (props) => {
           <input
             type="text"
             id="name"
-            value={props.info.name}
+            value={info.name}
             onChange={(evet) => changeInfo("name", evet.target.value)}
           />
         </div>
@@ -43,7 +43,7 @@ const Edit = (props) => {
           <input
             type="email"
             id="email"
-            value={props.info.email}
+            value={info.email}
             onChange={(evet) => changeInfo("email", evet.target.value)}
           />
         </div>
@@ -53,7 +53,7 @@ const Edit = (props) => {
           <input
             type="date"
             id="date"
-            value={props.info.date}
+            value={info.date}
             onChange={(evet) => changeInfo("date", evet.target.value)}
           />
         </div>
@@ -63,7 +63,7 @@ const Edit = (props) => {
           <input
             type="number"
             id="number"
-            value={props.info.number}
+            value={info.number}
             onChange={(evet) => changeInfo("number", evet.target.value)}
           />
         </div>

@@ -3,9 +3,9 @@ import ReactDOM from "react-dom";
 import Button from "../../UI/Button";
 import classes from "./FormModal.module.css";
 
-const Backdrop = (props) => {
+const Backdrop = ({ onClose }) => {
   const closeModalHandler = (close) => {
-    props.onClose(close);
+    onClose(close);
   };
 
   return (
@@ -16,7 +16,7 @@ const Backdrop = (props) => {
   );
 };
 
-const Overlay = (props) => {
+const Overlay = ({ newDataList, deleteFormModal }) => {
   const [userInfo, setUserInfo] = useState({
     name: "",
     email: "",
@@ -39,8 +39,8 @@ const Overlay = (props) => {
     ) {
       return;
     } else {
-      props.newDataList({ ...userInfo, id: Math.random().toString() });
-      props.deleteFormModal(false);
+      newDataList({ ...userInfo, id: Math.random().toString() });
+      deleteFormModal(false);
     }
   };
 
@@ -93,19 +93,19 @@ const Overlay = (props) => {
   );
 };
 
-const FormModal = (props) => {
+const FormModal = ({ newDataList, deleteFormModal, onClose }) => {
   const newDataListHandler = (newData) => {
-    props.newDataList(newData);
+    newDataList(newData);
   };
 
   const deleteModalHandler = (close) => {
-    props.deleteFormModal(close);
+    deleteFormModal(close);
   };
 
   return (
     <Fragment>
       {ReactDOM.createPortal(
-        <Backdrop onClose={props.onClose} />,
+        <Backdrop onClose={onClose} />,
         document.getElementById("backdrop-root")
       )}
       {ReactDOM.createPortal(
