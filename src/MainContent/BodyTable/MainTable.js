@@ -1,13 +1,12 @@
 import { Fragment, useState } from "react";
 import classes from "./MainTable.module.css";
 import { FaTrash, FaEdit } from "react-icons/fa";
-import Edit from "../Edit/Edit";
+import Edit from "../edit/Edit";
 
-const MainTable = ({ deleteUser, listEdit, list }) => {
+const MainTable = ({ deleteUser, listEditHandler, list }) => {
   const [editModal, setEditModal] = useState(false);
 
   const [info, setInfo] = useState({
-    id: 0,
     name: "",
     email: "",
     number: "",
@@ -33,7 +32,7 @@ const MainTable = ({ deleteUser, listEdit, list }) => {
 
   const editListHandler = (editedRow) => {
     setInfo(editedRow);
-    listEdit(editedRow);
+    listEditHandler(editedRow);
   };
 
   return (

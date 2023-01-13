@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Button from "../../UI/Button";
-import FormModal from "../ModalForm/FormModal";
+import FormModal from "../modalForm/FormModal";
 import classes from "./TableHead.module.css";
 
 const TableHeader = ({ newDataList }) => {

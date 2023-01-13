@@ -14,11 +14,7 @@ const Edit = ({ setInfo, info, onClose, edit }) => {
     event.preventDefault();
 
     edit({
-      id: info.id,
-      name: info.name,
-      email: info.email,
-      date: info.date,
-      number: info.number,
+      ...info,
     });
 
     onClose(false);

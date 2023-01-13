@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import MainTable from "./MainContent/BodyTable/MainTable";
-import EmptyUsers from "./MainContent/EmptyList/EmptyUsers";
-import TableHeader from "./MainContent/Header/TableHead";
+import MainTable from "./MainContent/bodyTable/MainTable";
+import EmptyUsers from "./MainContent/emptyList/EmptyUsers";
+import TableHeader from "./MainContent/header/TableHead";
 import Container from "./UI/Container";
 
 const usersList = [
@@ -48,8 +48,9 @@ function App() {
   };
 
   const listEditHandler = (editList) => {
-    const editdata = dataList.filter((item) => item.id !== editList.id);
-    setDataList([...editdata, editList]);
+    setDataList([
+      ...dataList.map((row) => (row.id === editList.id ? editList : row)),
+    ]);
   };
 
   return (
@@ -59,7 +60,7 @@ function App() {
         <MainTable
           list={dataList}
           deleteUser={deleteUserHandler}
-          listEdit={listEditHandler}
+          listEditHandler={listEditHandler}
         />
       )}
       {emptyList && <EmptyUsers>There is not any user</EmptyUsers>}
