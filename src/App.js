@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { Grid } from "@mui/material";
 import MainTable from "./MainContent/bodyTable/MainTable";
 import EmptyUsers from "./MainContent/emptyList/EmptyUsers";
 import TableHeader from "./MainContent/header/TableHead";
-import Container from "./UI/Container";
 
 const usersList = [
   {
@@ -30,11 +30,6 @@ const usersList = [
 
 function App() {
   const [dataList, setDataList] = useState(usersList);
-  const [emptyList, setEmptyList] = useState(false);
-
-  useEffect(() => {
-    dataList.length === 0 ? setEmptyList(true) : setEmptyList(false);
-  }, [dataList.length]);
 
   const newDataListHandler = (newUser) => {
     setDataList((prevData) => {
@@ -54,17 +49,21 @@ function App() {
   };
 
   return (
-    <Container>
-      <TableHeader newDataList={newDataListHandler} />
-      {!emptyList && (
-        <MainTable
-          list={dataList}
-          deleteUser={deleteUserHandler}
-          listEditHandler={listEditHandler}
-        />
-      )}
-      {emptyList && <EmptyUsers>There is not any user</EmptyUsers>}
-    </Container>
+    <Grid container justifyContent="center">
+      <Grid item xs={7}>
+        <TableHeader newDataList={newDataListHandler} />
+        {dataList.length > 0 && (
+          <MainTable
+            list={dataList}
+            deleteUser={deleteUserHandler}
+            listEditHandler={listEditHandler}
+          />
+        )}
+        {dataList.length === 0 && (
+          <EmptyUsers>There is not any user</EmptyUsers>
+        )}
+      </Grid>
+    </Grid>
   );
 }
 

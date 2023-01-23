@@ -51,12 +51,12 @@ form div label {
 }
 
 .btnBackColor {
-  background-color: #25694b;
+  background-color: #27ae60;
   font-weight: bold;
   font-size: 16px;
   border: 1px solid #39a275;
 }
 
 .btnBackColor:hover {
-  background-color: #27ae60;
+  background-color: #25694b;
 }

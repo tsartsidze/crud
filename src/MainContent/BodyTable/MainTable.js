@@ -1,9 +1,29 @@
-import { Fragment, useState } from "react";
-import classes from "./MainTable.module.css";
-import { FaTrash, FaEdit } from "react-icons/fa";
+import { useState } from "react";
+import {
+  TableContainer,
+  Table,
+  TableHead,
+  TableBody,
+  TableRow,
+  TableCell,
+  IconButton,
+} from "@mui/material";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { makeStyles } from "mui-styles";
 import Edit from "../edit/Edit";
 
+const useStyles = makeStyles(() => ({
+  tableRow1: {
+    "& .MuiTableCell-root": {
+      fontWeight: "bold",
+    },
+  },
+}));
+
 const MainTable = ({ deleteUser, listEditHandler, list }) => {
+  const classes = useStyles();
+
   const [editModal, setEditModal] = useState(false);
 
   const [info, setInfo] = useState({
@@ -36,7 +56,7 @@ const MainTable = ({ deleteUser, listEditHandler, list }) => {
   };
 
   return (
-    <Fragment>
+    <>
       {editModal && (
         <Edit
           onClose={closeEditModal}
@@ -46,40 +66,46 @@ const MainTable = ({ deleteUser, listEditHandler, list }) => {
           edit={editListHandler}
         />
       )}
-      <table className={classes}>
-        <tbody>
-          <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Date</th>
-            <th>Number</th>
-            <th>Action</th>
-          </tr>
-          {list.map((listRow) => (
-            <tr key={listRow.id} className={classes.tr}>
-              <td>{listRow.name}</td>
-              <td>{listRow.email}</td>
-              <td>{listRow.date}</td>
-              <td>{listRow.number}</td>
-              <td className={classes.icons}>
-                <FaEdit
-                  size="1.3rem"
-                  color="#F57C00"
-                  cursor="pointer"
-                  onClick={() => editUserHandler(listRow)}
-                />
-                <FaTrash
-                  size="1.3rem"
-                  color="#F44336"
-                  cursor="pointer"
-                  onClick={() => deleteUserHandler(listRow.id)}
-                />
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </Fragment>
+      <TableContainer>
+        <Table>
+          <TableHead>
+            <TableRow className={classes.tableRow1}>
+              <TableCell>Name</TableCell>
+              <TableCell>Email</TableCell>
+              <TableCell>Date</TableCell>
+              <TableCell>Number</TableCell>
+              <TableCell>Action</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {list.map((listRow) => (
+              <TableRow key={listRow.id}>
+                <TableCell>{listRow.name}</TableCell>
+                <TableCell>{listRow.email}</TableCell>
+                <TableCell>{listRow.date}</TableCell>
+                <TableCell>{listRow.number}</TableCell>
+                <TableCell>
+                  <IconButton
+                    aria-label="edit"
+                    size="large"
+                    onClick={() => editUserHandler(listRow)}
+                  >
+                    <EditIcon color="warning" />
+                  </IconButton>
+                  <IconButton
+                    aria-label="delete"
+                    size="large"
+                    onClick={() => deleteUserHandler(listRow.id)}
+                  >
+                    <DeleteIcon color="error" />
+                  </IconButton>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </>
   );
 };
 
