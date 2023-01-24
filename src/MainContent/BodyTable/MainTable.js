@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { editUserAction } from "../../redux/EditUser";
 import {
   TableContainer,
   Table,
@@ -24,7 +26,10 @@ const useStyles = makeStyles(() => ({
 const MainTable = ({ deleteUser, listEditHandler, list }) => {
   const classes = useStyles();
 
-  const [editModal, setEditModal] = useState(false);
+  const dispatch = useDispatch();
+  const editUserModal = useSelector(
+    (state) => state.editUserModal.visibleEditModal
+  );
 
   const [info, setInfo] = useState({
     name: "",
@@ -38,16 +43,16 @@ const MainTable = ({ deleteUser, listEditHandler, list }) => {
   };
 
   const editUserHandler = (userInfo) => {
-    setEditModal(true);
+    dispatch(editUserAction.showEditModal());
     setInfo(userInfo);
   };
 
-  const closeEditModal = (close) => {
-    setEditModal(close);
+  const closeEditModal = () => {
+    dispatch(editUserAction.hideEditModal());
   };
 
-  const onCloseModal = (close) => {
-    setEditModal(close);
+  const onCloseModal = () => {
+    dispatch(editUserAction.hideEditModal());
   };
 
   const editListHandler = (editedRow) => {
@@ -57,7 +62,7 @@ const MainTable = ({ deleteUser, listEditHandler, list }) => {
 
   return (
     <>
-      {editModal && (
+      {editUserModal && (
         <Edit
           onClose={closeEditModal}
           onCloseModal={onCloseModal}

@@ -50,7 +50,7 @@ function App() {
 
   return (
     <Grid container justifyContent="center">
-      <Grid item xs={7}>
+      <Grid item xs={10} md={7}>
         <TableHeader newDataList={newDataListHandler} />
         {dataList.length > 0 && (
           <MainTable

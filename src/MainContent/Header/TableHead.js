@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addUserActions } from "../../redux/AddUser";
 import { makeStyles } from "mui-styles";
 import FormModal from "../modalForm/FormModal";
 import { Button } from "@mui/material";
@@ -34,14 +35,17 @@ const useStyles = makeStyles(() => ({
 const TableHeader = ({ newDataList }) => {
   const classes = useStyles();
 
-  const [isVisible, setIsVisible] = useState(false);
+  const dispatch = useDispatch();
+  const addUserModal = useSelector(
+    (state) => state.addUserModal.visibleAddModal
+  );
 
   const visibleModalHandler = () => {
-    setIsVisible(true);
+    dispatch(addUserActions.showModal());
   };
 
   const closeModalHandler = (close) => {
-    setIsVisible(close);
+    dispatch(addUserActions.hideModal());
   };
 
   const newDataListHandler = (newData) => {
@@ -49,12 +53,12 @@ const TableHeader = ({ newDataList }) => {
   };
 
   const closeModalHander = (close) => {
-    setIsVisible(close);
+    dispatch(addUserActions.hideModal());
   };
 
   return (
     <header className={classes.header}>
-      {isVisible && (
+      {addUserModal && (
         <FormModal
           onClose={closeModalHandler}
           newDataList={newDataListHandler}
