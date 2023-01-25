@@ -1,85 +1,66 @@
 import { useState } from "react";
-import ReactDOM from "react-dom";
-import classes from "./FormModal.module.css";
-import { TextField, Button } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import { addUserActions } from "../../redux/AddUser";
+import { TextField, Button, Box, Modal } from "@mui/material";
 import { makeStyles } from "mui-styles";
 
 const useStyles = makeStyles(() => ({
-  backdrop: {
-    position: "fixed",
-    top: 0,
-    left: 0,
-    width: "100%",
-    height: "100vh",
-    zIndex: 10,
-    backgroundColor: "rgba(0, 0, 0, 0.75)",
-  },
-  modal: {
-    position: "fixed",
-    top: "40%",
-    left: "50%",
-    width: "30%",
-    transform: "translate(-50%, -50%)",
-    zIndex: "100",
-    overflow: "hidden",
-    paddingTop: "50px",
-    transition: "0.3 ease",
-  },
-  form: {
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
-    padding: "20px",
-    backgroundColor: "white",
-    borderRadius: "12px",
-    backgroundColor: "#cfd8dc",
+  muiBox: {
+    "&.MuiBox-root": {
+      position: "absolute",
+      top: "45%",
+      left: "50%",
+      transform: "translate(-50%, -50%)",
+      width: "25%",
+      backgroundColor: "#cfd8dc",
+      boxShadow: 24,
+      padding: "70px 50px 40px 50px",
+      borderRadius: "12px",
+    },
   },
   field: {
     "& .MuiInputBase-root": {
-      marginTop: "8px",
-      width: "300px",
+      marginBottom: "20px",
+      width: "100%",
       fontSize: "16px",
       paddingLeft: "10px",
+    },
+  },
+  mainBox: {
+    "&.MuiBox-root": {
+      width: "100%",
+      display: "flex",
+      alignItems: "cemter",
+      justifyContent: "center",
+      flexDirection: "column",
     },
   },
   addBtn: {
     "&.MuiButtonBase-root": {
       textTransform: "none",
+      padding: "10px 20px",
+      fontWeight: "700",
     },
-  },
-  "& div": {
-    display: "flex",
-    flexDirection: "column",
-    marginBottom: "15px",
-    width: "300px",
   },
 }));
 
-const Backdrop = ({ onClose }) => {
-  const classes = useStyles();
-
-  const closeModalHandler = (close) => {
-    onClose(close);
-  };
-
-  return (
-    <div
-      className={classes.backdrop}
-      onClick={() => closeModalHandler(false)}
-    ></div>
-  );
-};
-
-const Overlay = ({ newDataList, deleteFormModal }) => {
-  const classes = useStyles();
-
+const FormModal = ({ newDataList, deleteFormModal }) => {
   const [userInfo, setUserInfo] = useState({
     name: "",
     email: "",
-    date: null,
+    date: "",
     number: "",
   });
+  const classes = useStyles();
+
+  const dispatch = useDispatch();
+  const addUserModal = useSelector(
+    (state) => state.addUserModal.visibleAddModal
+  );
+
+  const closeHandler = () => {
+    dispatch(addUserActions.hideModal());
+  };
 
   const onChangeFunction = (key, value) => {
     setUserInfo({ ...userInfo, [key]: value });
@@ -102,33 +83,29 @@ const Overlay = ({ newDataList, deleteFormModal }) => {
   };
 
   return (
-    <form className={classes.modal}>
-      <div>
-        <div>
+    <Modal open={addUserModal} onClose={closeHandler}>
+      <Box className={classes.muiBox}>
+        <Box className={classes.mainBox}>
           <TextField
             className={classes.field}
-            label="Name"
+            label="Enter your name"
             variant="outlined"
             type="text"
             id="name"
             value={userInfo.name}
             onChange={(event) => onChangeFunction("name", event.target.value)}
           />
-        </div>
 
-        <div>
           <TextField
             className={classes.field}
-            label="Email"
+            label="Enter your email"
             variant="outlined"
             type="email"
             id="email"
             value={userInfo.email}
             onChange={(event) => onChangeFunction("email", event.target.value)}
           />
-        </div>
 
-        <div>
           <TextField
             className={classes.field}
             variant="outlined"
@@ -137,56 +114,30 @@ const Overlay = ({ newDataList, deleteFormModal }) => {
             value={userInfo.date}
             onChange={(event) => onChangeFunction("date", event.target.value)}
           />
-        </div>
 
-        <div>
           <TextField
             className={classes.field}
-            label="Number"
+            label="Enter your number"
             variant="outlined"
             type="number"
             id="number"
             value={userInfo.number}
             onChange={(event) => onChangeFunction("number", event.target.value)}
           />
-        </div>
 
-        <Button
-          className={classes.addBtn}
-          onClick={addUserHandler}
-          variant="contained"
-          color="success"
-        >
-          Add New User
-        </Button>
-      </div>
-    </form>
-  );
-};
-
-const FormModal = ({ newDataList, deleteFormModal, onClose }) => {
-  const newDataListHandler = (newData) => {
-    newDataList(newData);
-  };
-
-  const deleteModalHandler = (close) => {
-    deleteFormModal(close);
-  };
-
-  return (
-    <>
-      {ReactDOM.createPortal(
-        <Backdrop onClose={onClose} />,
-        document.getElementById("backdrop-root")
-      )}
-      {ReactDOM.createPortal(
-        <Overlay
-          newDataList={newDataListHandler}
-          deleteFormModal={deleteModalHandler}
-        />,
-        document.getElementById("overlay-root")
-      )}
-    </>
+          <Box sx={{ textAlign: "center" }}>
+            <Button
+              className={classes.addBtn}
+              onClick={addUserHandler}
+              variant="contained"
+              color="success"
+            >
+              Add New User
+            </Button>
+          </Box>
+        </Box>
+      </Box>
+    </Modal>
   );
 };
 

@@ -69,6 +69,7 @@ const MainTable = ({ deleteUser, listEditHandler, list }) => {
           info={info}
           setInfo={setInfo}
           edit={editListHandler}
+          editUserModal={editUserModal}
         />
       )}
       <TableContainer>

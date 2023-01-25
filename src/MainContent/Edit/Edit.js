@@ -1,49 +1,37 @@
+import { useDispatch, useSelector } from "react-redux";
+import { editUserAction } from "../../redux/EditUser";
 import { TextField, Button, Box, Modal } from "@mui/material";
 import { makeStyles } from "mui-styles";
 
 const useStyles = makeStyles(() => ({
-  backdrop: {
-    position: "fixed",
-    top: 0,
-    left: 0,
-    width: "100%",
-    height: "100vh",
-    zIndex: 10,
-    backgroundColor: "rgba(0, 0, 0, 0.75)",
-  },
-  modal: {
-    position: "fixed",
-    top: "40%",
-    left: "50%",
-    width: "30%",
-    transform: "translate(-50%, -50%)",
-    zIndex: "100",
-    overflow: "hidden",
-    paddingTop: "50px",
-    transition: "0.3 ease",
-  },
-  form: {
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
-    padding: "20px",
-    backgroundColor: "white",
-    borderRadius: "12px",
-    backgroundColor: "#cfd8dc",
-  },
-  "& Box": {
-    display: "flex",
-    flexDirection: "column",
-    marginBottom: "15px",
-    width: "300px",
+  muiBox: {
+    "&.MuiBox-root": {
+      position: "absolute",
+      top: "45%",
+      left: "50%",
+      transform: "translate(-50%, -50%)",
+      width: "25%",
+      backgroundColor: "#cfd8dc",
+      boxShadow: 24,
+      padding: "70px 50px 40px 50px",
+      borderRadius: "12px",
+    },
   },
   field: {
     "& .MuiInputBase-root": {
-      marginTop: "8px",
-      width: "300px",
+      marginBottom: "20px",
+      width: "100%",
       fontSize: "16px",
       paddingLeft: "10px",
+    },
+  },
+  mainBox: {
+    "&.MuiBox-root": {
+      width: "100%",
+      display: "flex",
+      alignItems: "cemter",
+      justifyContent: "center",
+      flexDirection: "column",
     },
   },
   buttonGroup: {
@@ -52,6 +40,7 @@ const useStyles = makeStyles(() => ({
     alignItems: "center",
     flexDirection: "row",
     justifyContent: "space-between",
+    marginTop: "12px",
   },
   editBtn: {
     "&.MuiButtonBase-root": {
@@ -79,6 +68,15 @@ const useStyles = makeStyles(() => ({
 const Edit = ({ setInfo, info, onClose, edit }) => {
   const classes = useStyles();
 
+  const dispatch = useDispatch();
+  const editUserModal = useSelector(
+    (state) => state.editUserModal.visibleEditModal
+  );
+
+  const closeHandler = () => {
+    dispatch(editUserAction.hideEditModal());
+  };
+
   const changeInfo = (key, value) => {
     setInfo({ ...info, [key]: value });
   };
@@ -98,57 +96,48 @@ const Edit = ({ setInfo, info, onClose, edit }) => {
   };
 
   return (
-    <>
-      <div className={classes.backdrop} onClick={closeEditModal}></div>
-      <form className={classes.modal} onSubmit={editHandler}>
-        <Box>
-          <Box>
-            <TextField
-              className={classes.field}
-              label="Name"
-              variant="outlined"
-              type="text"
-              id="name"
-              value={info.name}
-              onChange={(evet) => changeInfo("name", evet.target.value)}
-            />
-          </Box>
+    <Modal open={editUserModal} onClose={closeHandler}>
+      <Box className={classes.muiBox}>
+        <Box className={classes.mainBox}>
+          <TextField
+            className={classes.field}
+            label="Name"
+            variant="outlined"
+            type="text"
+            id="name"
+            value={info.name}
+            onChange={(evet) => changeInfo("name", evet.target.value)}
+          />
 
-          <Box>
-            <TextField
-              className={classes.field}
-              label="Email"
-              variant="outlined"
-              type="email"
-              id="email"
-              value={info.email}
-              onChange={(evet) => changeInfo("email", evet.target.value)}
-            />
-          </Box>
+          <TextField
+            className={classes.field}
+            label="Email"
+            variant="outlined"
+            type="email"
+            id="email"
+            value={info.email}
+            onChange={(evet) => changeInfo("email", evet.target.value)}
+          />
 
-          <Box>
-            <TextField
-              className={classes.field}
-              label="Date"
-              variant="outlined"
-              type="date"
-              id="date"
-              value={info.date}
-              onChange={(evet) => changeInfo("date", evet.target.value)}
-            />
-          </Box>
+          <TextField
+            className={classes.field}
+            label="Date"
+            variant="outlined"
+            type="date"
+            id="date"
+            value={info.date}
+            onChange={(evet) => changeInfo("date", evet.target.value)}
+          />
 
-          <Box>
-            <TextField
-              className={classes.field}
-              label="Number"
-              variant="outlined"
-              type="number"
-              id="number"
-              value={info.number}
-              onChange={(evet) => changeInfo("number", evet.target.value)}
-            />
-          </Box>
+          <TextField
+            className={classes.field}
+            label="Number"
+            variant="outlined"
+            type="number"
+            id="number"
+            value={info.number}
+            onChange={(evet) => changeInfo("number", evet.target.value)}
+          />
 
           <Box className={classes.buttonGroup}>
             <Button
@@ -163,13 +152,14 @@ const Edit = ({ setInfo, info, onClose, edit }) => {
               className={classes.editBtn}
               variant="contained"
               color="warning"
+              onClick={editHandler}
             >
               Edit
             </Button>
           </Box>
         </Box>
-      </form>
-    </>
+      </Box>
+    </Modal>
   );
 };
 
