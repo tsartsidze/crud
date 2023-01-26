@@ -32,7 +32,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const TableHeader = ({ newDataList }) => {
+const TableHeader = () => {
   const classes = useStyles();
 
   const dispatch = useDispatch();
@@ -44,26 +44,10 @@ const TableHeader = ({ newDataList }) => {
     dispatch(addUserActions.showModal());
   };
 
-  const closeModalHandler = (close) => {
-    dispatch(addUserActions.hideModal());
-  };
-
-  const newDataListHandler = (newData) => {
-    newDataList(newData);
-  };
-
-  const closeModalHander = (close) => {
-    dispatch(addUserActions.hideModal());
-  };
-
   return (
     <header className={classes.header}>
       {addUserModal && (
-        <FormModal
-          onClose={closeModalHandler}
-          newDataList={newDataListHandler}
-          deleteFormModal={closeModalHander}
-        />
+        <FormModal />
       )}
       <h2>Users list</h2>
       <Button

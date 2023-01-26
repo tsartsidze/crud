@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { userAction } from "../../redux/UserSlice";
 import { editUserAction } from "../../redux/EditUser";
 import {
   TableContainer,
@@ -23,13 +24,14 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const MainTable = ({ deleteUser, listEditHandler, list }) => {
+const MainTable = ({ deleteUser, listEditHandler}) => {
   const classes = useStyles();
 
   const dispatch = useDispatch();
   const editUserModal = useSelector(
     (state) => state.editUserModal.visibleEditModal
   );
+  const usersList = useSelector((state) => state.users)
 
   const [info, setInfo] = useState({
     name: "",
@@ -38,8 +40,8 @@ const MainTable = ({ deleteUser, listEditHandler, list }) => {
     date: new Date(),
   });
 
-  const deleteUserHandler = (userId) => {
-    deleteUser(userId);
+  const deleteUserHandler = (deleteUserId) => {
+    dispatch(userAction.deleteUser(deleteUserId))
   };
 
   const editUserHandler = (userInfo) => {
@@ -72,7 +74,13 @@ const MainTable = ({ deleteUser, listEditHandler, list }) => {
           editUserModal={editUserModal}
         />
       )}
-      <TableContainer>
+      <TableContainer
+        sx={{
+          border: "1px solid #CFD8DC",
+          borderRadius: "10px",
+          boxShadow: "3px 5px 20px grey",
+        }}
+      >
         <Table>
           <TableHead>
             <TableRow className={classes.tableRow1}>
@@ -84,7 +92,7 @@ const MainTable = ({ deleteUser, listEditHandler, list }) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {list.map((listRow) => (
+            {usersList.map((listRow) => (
               <TableRow key={listRow.id}>
                 <TableCell>{listRow.name}</TableCell>
                 <TableCell>{listRow.email}</TableCell>

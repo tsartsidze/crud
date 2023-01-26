@@ -106,7 +106,7 @@ const Edit = ({ setInfo, info, onClose, edit }) => {
             type="text"
             id="name"
             value={info.name}
-            onChange={(evet) => changeInfo("name", evet.target.value)}
+            onChange={(event) => changeInfo("name", event.target.value)}
           />
 
           <TextField
@@ -116,7 +116,7 @@ const Edit = ({ setInfo, info, onClose, edit }) => {
             type="email"
             id="email"
             value={info.email}
-            onChange={(evet) => changeInfo("email", evet.target.value)}
+            onChange={(event) => changeInfo("email", event.target.value)}
           />
 
           <TextField
@@ -126,7 +126,7 @@ const Edit = ({ setInfo, info, onClose, edit }) => {
             type="date"
             id="date"
             value={info.date}
-            onChange={(evet) => changeInfo("date", evet.target.value)}
+            onChange={(event) => changeInfo("date", event.target.value)}
           />
 
           <TextField
@@ -136,7 +136,7 @@ const Edit = ({ setInfo, info, onClose, edit }) => {
             type="number"
             id="number"
             value={info.number}
-            onChange={(evet) => changeInfo("number", evet.target.value)}
+            onChange={(event) => changeInfo("number", event.target.value)}
           />
 
           <Box className={classes.buttonGroup}>

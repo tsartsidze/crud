@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addUserActions } from "../../redux/AddUser";
+import { userAction } from "../../redux/UserSlice";
 import { TextField, Button, Box, Modal } from "@mui/material";
 import { makeStyles } from "mui-styles";
 
@@ -44,7 +45,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const FormModal = ({ newDataList, deleteFormModal }) => {
+const FormModal = () => {
   const [userInfo, setUserInfo] = useState({
     name: "",
     email: "",
@@ -77,8 +78,10 @@ const FormModal = ({ newDataList, deleteFormModal }) => {
     ) {
       return;
     } else {
-      newDataList({ ...userInfo, id: Math.random().toString() });
-      deleteFormModal(false);
+      dispatch(
+        userAction.addNewUser({ ...userInfo, id: Math.random().toString() })
+      );
+      dispatch(addUserActions.hideModal());
     }
   };
 
